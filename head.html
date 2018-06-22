@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="./jquery.dataTables.js"></script>
+    <script src="jstree.min.js"></script>
+    <script src="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <title>head</title>
+    <style>
+        * {
+            padding: 0;
+            margin:0;
+        }
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        div.top {
+            height:100px;
+            width: 100%;
+            background-image: url("./image/header2_bg.jpg");
+            position:relative;
+        }
+        div.top-center {
+             position:absolute;
+             width:70%;
+             height: 100%;
+            left:15%;
+            /* background-color:yellow; */
+        }
+        .left {
+            float: left;
+            width: 300px;
+            height: 30px;
+            background: url("./image/logo2.png") no-repeat;
+            position:absolute;
+            top:50%;
+            transform: translateY(-50%);
+        }
+        .middle {
+            float: right;
+            position:absolute;
+            top:50%;
+            left:30%;
+            transform: translateY(-50%);
+        }
+        .middle li {
+            float: left;
+            list-style: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding:0 10px;
+        }
+        .middle li a {
+            color:#fff;
+        }
+        .right {
+            float: right;
+            color:#fff;
+            position: absolute;
+            top: 50%;
+            right:20px;
+            transform:translateY(-50%);
+            cursor: pointer;
+            user-select:none
+        }
+        .right .admin {
+            padding:5px;
+        }
+        .right .adminModel {
+            width: 120px;
+            height: 64px;
+            position:absolute;
+            top:30px;
+            right: 0;
+            background-color: #fff;
+            color:#000;
+            border-radius: 5px;
+            display: none;
+        }
+        .right .adminModel p {
+            text-align: center;
+            margin:0;
+            padding:6px 0;
+        }
+        .right .adminModel p:hover {
+            background-color: #eee;
+        }
+        ._search {
+            height: 100px;
+            text-align: center;
+            padding-top:33px;
+            box-sizing: border-box;
+        }
+        
+        ._search input {
+            width: 510px;
+            outline-style: none;
+            height: 34px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        ._search button {
+            width: 80px;
+            height: 34px;
+            border-radius: 5px;
+            background-color:#4d6e86;
+            border: none;
+            color:#fff;
+            outline-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="top">
+        <div class="top-center">
+            <div class="left"></div>
+            <div class="middle">
+                <ul>
+                    <li><a href="#"> 首页</a></li>
+                    <li><a href="#"> 搜索</a></li>
+                    <li><a href="#"> 人员管理</a></li>
+                    <li><a href="#"> 网络行为</a></li>
+                    <li><a href="#"> 活动轨迹</a></li>
+                    <li><a href="#"> 关系拓展</a></li>
+                    <li><a href="#"> 组织管理</a></li>
+                    <li><a href="#"> 群体管理</a></li>
+                    <li><a href="#"> 事件管理</a></li>
+                    <li><a href="#"> 设置</a></li>
+                    <li><a href="#"> 使用帮助</a></li>
+                </ul>
+            </div>
+            
+        </div>
+        <div class="right">
+            <div class="admin">管理员<i class="glyphicon glyphicon-triangle-bottom"></i></div>
+            <div class="adminModel">
+                <p class="logout">注销用户</p>
+                <p class="triggerAdmin">切换用户</p>
+            </div>
+        </div>
+    </div>
+    <div class="_search">
+        <input type="text" id="search_value" placeholder="请输入搜索内容">
+        <button id="search_button">全局搜索</button>
+    </div>
+    <div class="result">
+
+    </div>
+    <script>
+        $(function(){
+            // 点击控制元素的显示与隐藏方法
+            function click_trigger(select,select_to){
+                var adminflag = false;
+                select.on('click',function(){
+                    if(!adminflag){
+                        select_to.css('display','block');
+                        adminflag = true;
+                    } else {
+                        select_to.css('display','none');
+                        adminflag = false;
+                    }
+                })
+            }
+            click_trigger($('.admin'),$('.adminModel'));
+            $("#search_button").on('click',function(e){
+                console.log($.trim($('#search_value').val()).length)
+                if($.trim($('#search_value').val()).length){  //清除字符串两端的额空格
+                    var s_value = $('#search_value').val();
+                    if(sessionStorage.getItem("search_value")){
+                        sessionStorage.removeItem("search_value");
+                         // 将检索关键字放到session里
+                         sessionStorage.setItem("search_value", s_value);
+                    } else {
+                        // 将检索关键字放到session里
+                        sessionStorage.setItem("search_value", s_value);
+                    }
+                    $(".result").load('result.html')
+                } else {
+                    alert("请输入搜索内容");
+                }
+            })
+        })
+    </script>
+</body>
+</html>
