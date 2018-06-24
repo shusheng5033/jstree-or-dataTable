@@ -94,68 +94,13 @@
     </div>
     
     <script>
-        // 初始化js树 数据
-        function initTree(){
-            $.ajax({
-                url:'./json/data.json',
-                dataType:'json',
-                success:function(data){
-                    console.log(123)
-                    console.log(data);
-                    // 根据检索关键字对data进行过滤,
-                    //1.取关键字
-                        var s_value = sessionStorage.getItem("search_value");
-                        console.log(s_value);
-                        console.log(data);
-                        $('#tree_left').jstree("destroy");
-                    $('#tree_left').jstree({
-                        'core':{
-                            'data':data,
-                        },
-                    })
-                    $("#tree_left").on('ready.jstree',function(a,b){
-                        $('<span/>',{
-                                class:'num'
-                            }).appendTo('.jstree-node');
-                        for(var i = 0; i<data.length;i++){
-                            var num = data[i].children.length;
-                            $('.num').eq(i).text("("+num+")");
-                        }
-                    })
-                    $("#tree_left").on('changed.jstree',function(a,b){
-                        var select_id = b.instance.get_selected(true)[0].id;
-                        // console.log(select_id);
-                        for(var i =0;i<data.length;i++){
-                            if(select_id == data[i].id){
-                                var dataJson = data[i].children;
-                                // console.log(dataJson)
-                                initTable(dataJson);
-                                break;
-                            }
-                        }
-                    })  
-                }
-            })
-        }
-        function initTable(data){
-            var table = $('#data_table').DataTable({
-                data:data,
-                columns:[
-                    {data:'id'},
-                    {data:'text'},
-                ],
-                destroy:true,
-                renderer: "bootstrap",
-                searching : false, 
-                bLengthChange: false,
-            });
-        }
+        
         
        
         $(function(){
             
             // 调用初始化js树数据
-            initTree();
+            
         })
         
     </script>

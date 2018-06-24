@@ -8,6 +8,7 @@
     <script src="./jquery.dataTables.js"></script>
     <script src="jstree.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    
     <title>head</title>
     <style>
         * {
@@ -153,38 +154,10 @@
     </div>
     <script>
         $(function(){
-            // 点击控制元素的显示与隐藏方法
-            function click_trigger(select,select_to){
-                var adminflag = false;
-                select.on('click',function(){
-                    if(!adminflag){
-                        select_to.css('display','block');
-                        adminflag = true;
-                    } else {
-                        select_to.css('display','none');
-                        adminflag = false;
-                    }
-                })
-            }
-            click_trigger($('.admin'),$('.adminModel'));
-            $("#search_button").on('click',function(e){
-                console.log($.trim($('#search_value').val()).length)
-                if($.trim($('#search_value').val()).length){  //清除字符串两端的额空格
-                    var s_value = $('#search_value').val();
-                    if(sessionStorage.getItem("search_value")){
-                        sessionStorage.removeItem("search_value");
-                         // 将检索关键字放到session里
-                         sessionStorage.setItem("search_value", s_value);
-                    } else {
-                        // 将检索关键字放到session里
-                        sessionStorage.setItem("search_value", s_value);
-                    }
-                    $(".result").load('result.html')
-                } else {
-                    alert("请输入搜索内容");
-                }
-            })
+            
+            
         })
     </script>
+    <script src="./result.js"></script>
 </body>
 </html>
